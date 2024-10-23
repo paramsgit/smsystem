@@ -8,6 +8,7 @@ from validate import validate_book, validate_email_and_password, validate_user
 from models.models import User
 from auth_middleware import token_required
 from routes.sms_routes import sms_bp
+from routes.country_operator_routes import operator_bp
 
 load_dotenv()
 
@@ -17,6 +18,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY') or 'this is a secret'
 print(SECRET_KEY)
 app.config['SECRET_KEY'] = SECRET_KEY
 app.register_blueprint(sms_bp, url_prefix='/api')
+app.register_blueprint(operator_bp, url_prefix='/api/operators')
 
 
 
