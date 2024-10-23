@@ -93,3 +93,47 @@ def validate_email_and_password(email, password):
                 upper and lower case letters, numbers and special characters'
         }
     return True
+
+def validate_sms_data(**args):
+    """SMS Data Validator"""
+    
+    # Required fields validation
+    missing_fields = {
+        'phone_number': 'Phone number is required',
+        'proxy': 'Proxy is required',
+        'country': 'Country is required',
+        'operator': 'Operator is required'
+    }
+    
+    errors = {key: message for key, message in missing_fields.items() if not args.get(key)}
+    
+    if errors:
+        return {
+            'status': 'error',
+            'errors': errors
+        }
+
+    # Validate that country and operator are strings
+    if not isinstance(args.get('country'), str) or not isinstance(args.get('operator'), str):
+        return {
+            'status': 'error',
+            'message': 'Country and Operator must be strings'
+        }
+
+    # Validate phone number (simple length check)
+    phone_number = args.get('phone_number')
+    if not isinstance(phone_number, str) or not phone_number.isdigit() or len(phone_number) < 10:
+        return {
+            'status': 'error',
+            'message': 'Phone number must be a valid numeric string of at least 10 digits'
+        }
+
+    # Validate proxy (can extend with more logic if needed)
+    if not isinstance(args.get('proxy'), str):
+        return {
+            'status': 'error',
+            'message': 'Proxy must be a string'
+        }
+
+    # All validations passed
+    return True

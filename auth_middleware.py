@@ -2,7 +2,7 @@ from functools import wraps
 import jwt
 from flask import request, abort
 from flask import current_app
-import models
+import models.models as models
 
 def token_required(f):
     @wraps(f)

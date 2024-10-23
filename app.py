@@ -1,18 +1,24 @@
 import jwt, os
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify
+from flask_socketio import SocketIO
+from screenmanager import ScreenManager
 # from save_image import save_pic
 from validate import validate_book, validate_email_and_password, validate_user
+from models.models import User
+from auth_middleware import token_required
+from routes.sms_routes import sms_bp
 
 load_dotenv()
 
 app = Flask(__name__)
+socketio = SocketIO(app)
 SECRET_KEY = os.environ.get('SECRET_KEY') or 'this is a secret'
 print(SECRET_KEY)
 app.config['SECRET_KEY'] = SECRET_KEY
+app.register_blueprint(sms_bp, url_prefix='/api')
 
-from models import User
-from auth_middleware import token_required
+
 
 @app.route("/")
 def hello():
@@ -144,6 +150,72 @@ def disable_user(current_user):
             "data": None
         }), 400
 
+@app.route("/session/start", methods=["POST"])
+@token_required
+def start_session(current_user):
+    print("req came ")
+    try:
+        data = request.json
+        session_name = data.get("session_name")
+        if session_name is None:
+            return {
+            "message": "Invalid data, Session Name is required",
+            "data": None,
+            "error": "Bad Request"
+        }, 400
+        program = data.get("program")
+        if program is None:
+            return {
+            "message": "Invalid data, Program is required",
+            "data": None,
+            "error": "Bad Request"
+        }, 400
+        message = ScreenManager.start_session(session_name, program)
+        return jsonify({"message": message})
+    except Exception as e:
+        return jsonify({
+            "message": "failed to update account",
+            "error": str(e),
+            "data": None
+        }), 400
+    
+
+@app.route("/session/stop", methods=["POST"])
+@token_required
+def stop_session(current_user):
+    try:
+        data = request.json
+        session_name = data.get("session_name")
+        if session_name is None:
+            return {
+            "message": "Invalid data, Session Name is required",
+            "data": None,
+            "error": "Bad Request"
+        }, 400
+        message = ScreenManager.stop_session(session_name)
+        return jsonify({"message": message})
+    except Exception as e:
+        return jsonify({
+            "message": "failed to update account",
+            "error": str(e),
+            "data": None
+        }), 400
+    
+
+@app.route("/session", methods=["GET"])
+@token_required
+def list_sessions(current_user):
+    try:
+        sessions = ScreenManager.list_sessions()
+        return jsonify({"sessions": sessions})
+    except Exception as e:
+        return jsonify({
+            "message": "failed to update account",
+            "error": str(e),
+            "data": None
+        }), 400
+     
+
 
 @app.errorhandler(403)
 def forbidden(e):
@@ -163,4 +235,6 @@ def forbidden(e):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # app.run(debug=True)
+    socketio.run(app, debug=True)
+
