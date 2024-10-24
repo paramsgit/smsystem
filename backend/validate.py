@@ -137,3 +137,21 @@ def validate_sms_data(**args):
 
     # All validations passed
     return True
+
+def validate_pair_data(**args):
+    """Pair Data Validator"""
+
+    # Check if country and operator are provided and are strings
+    if not args.get('country') or not isinstance(args.get('country'), str):
+        return {'status': 'error', 'message': 'Country is required and must be a string'}
+    
+    if not args.get('operator') or not isinstance(args.get('operator'), str):
+        return {'status': 'error', 'message': 'Operator is required and must be a string'}
+
+    # Check if is_high_priority is a boolean (default to False if not provided)
+    is_high_priority = args.get('is_high_priority', False)
+    if not isinstance(is_high_priority, bool):
+        return {'status': 'error', 'message': 'is_high_priority must be a boolean'}
+
+    # All validations passed
+    return True
