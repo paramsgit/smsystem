@@ -9,11 +9,25 @@ import store from './utils/store';
 import Home from './components/home';
 import SignIn from './components/auth/signin';
 import Signup from './components/auth/signup';
+import ErrorPage from './components/errorPage';
+import { Services } from './components/dashboard/services';
+import Sms from './components/dashboard/sms';
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
       element: <Home/>,
+      errorElement: <ErrorPage />,
+      children:[
+        {
+          path:"/",
+          element:<Services/>
+        },
+        {
+          path:"/sms",
+          element:<Sms/>
+        }
+      ]
     },
     {
       path: "/signin",

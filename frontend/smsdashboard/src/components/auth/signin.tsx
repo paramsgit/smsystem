@@ -23,23 +23,30 @@ const SignIn = (props: Props) => {
                   },
                 body: JSON.stringify({ email:email,password:password }),
             })
+
             const result=await response.json();
             if(response.ok && result.data){
-                {setalertText("Success, Redirecting...");setalertStatus(true); setshowAlert(true);}
-                localStorage.setItem('auth-token',result.data)
+                { setalertText("Success, Redirecting...");
+                  setalertStatus(true); 
+                  setshowAlert(true);}
+                localStorage.setItem('auth-token',JSON.stringify(result.data))
                 setTimeout(() => {
                     navigate("/")
                 }, 1000);
                 
             }else{
-                {setalertText(result?.message);setalertStatus(false); setshowAlert(true);}
+                { setalertText(result?.message);
+                  setalertStatus(false);
+                  setshowAlert(true);          }
 
             }
             console.log(result)
             console.log(response.ok)
         } catch (error) {
             console.log(error)
-            setalertText("Something went wrong");setalertStatus(false); setshowAlert(true)
+            setalertText("Something went wrong");
+            setalertStatus(false); 
+            setshowAlert(true)
         }
     }
   return (

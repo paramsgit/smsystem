@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,Outlet } from 'react-router-dom'
 import { checkAuthToken } from '../utils/isLoggedIn'
 import Sidebar from './sidebar'
 import Container from './container'
@@ -9,6 +9,7 @@ const Home = (props: Props) => {
     const navigate = useNavigate();
     const [loggedIn,setloggedIn]=useState(false)
     const [loading,setloading]=useState(true)
+    const [name,setname]=useState("")
     
     useEffect(() => {
     const token=checkAuthToken()
@@ -20,8 +21,14 @@ const Home = (props: Props) => {
     }, [])
 
     useEffect(() => {
-      const data=localStorage.getItem('auth-token')
-      // if(data && data.name)
+      let authdata=localStorage.getItem('auth-token')
+      let data;
+      if(authdata)
+      data=JSON.parse(authdata)
+
+      if(data && data.name){
+        setname(data.name)
+      }
     }, [])
     
     
@@ -32,8 +39,8 @@ const Home = (props: Props) => {
    {loggedIn ? <div> 
 
       <div className='flex'>
-        <Sidebar/>
-        <Container/>
+        <Sidebar name={name}/>
+        <Container />
       </div>
 
    </div> :<div> Loading....</div>}
