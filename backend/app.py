@@ -1,6 +1,7 @@
 import jwt, os
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from flask_socketio import SocketIO
 from screenmanager import ScreenManager
 # from save_image import save_pic
@@ -13,6 +14,7 @@ from routes.country_operator_routes import operator_bp
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app)
 socketio = SocketIO(app)
 SECRET_KEY = os.environ.get('SECRET_KEY') or 'this is a secret'
 print(SECRET_KEY)
@@ -70,7 +72,7 @@ def login():
         # validate input
         is_validated = validate_email_and_password(data.get('email'), data.get('password'))
         if is_validated is not True:
-            return dict(message='Invalid data', data=None, error=is_validated), 400
+            return dict(message="Check your email and password again", data=None, error=is_validated), 400
         user = User().login(
             data["email"],
             data["password"]
@@ -86,14 +88,14 @@ def login():
                 return {
                     "message": "Successfully fetched auth token",
                     "data": user
-                }
+                },200
             except Exception as e:
                 return {
                     "error": "Something went wrong",
                     "message": str(e)
                 }, 500
         return {
-            "message": "Error fetching auth token!, invalid email or password",
+            "message": "Invalid email or password",
             "data": None,
             "error": "Unauthorized"
         }, 404
