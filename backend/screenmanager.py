@@ -1,6 +1,6 @@
 import subprocess
 import os
-
+import sh
 class ScreenManager:
 
     @staticmethod
@@ -20,16 +20,18 @@ class ScreenManager:
             return f"Error: Session '{session_name}' already exists."
 
         # Ensure the program exists
-        program_path = os.path.abspath(program)  # Get absolute path
+        program_path = os.path.abspath(os.path.join('sysfiles', program)) # Get absolute path
         if not os.path.isfile(program_path):
             return f"Error: Program '{program}' not found."
-
+        
         try:
-            result = subprocess.run(
-                ["screen", "-S", session_name, "-d", "-m", "python3", program_path],
-                check=True, capture_output=True, text=True
-            )
-            return f"Started session: {session_name} with output: {result.stdout}"
+
+            # result = subprocess.run(
+            #     ["screen", "-S", session_name, "-d", "-m", "python3 ", program_path],
+            #     check=True, capture_output=True, text=True, 
+            # )
+            result =sh.screen("-S", session_name, "-d", "-m", "python3", program_path)
+            return True
         except subprocess.CalledProcessError as e:
             return f"Error starting session: {e.stderr or str(e)}"
 
@@ -51,6 +53,19 @@ class ScreenManager:
             return f"Stopped session: {session_name}"
         except subprocess.CalledProcessError as e:
             return f"Error stopping session: {str(e)}"
+
+def is_session_running(session_name):
+    """Check if a screen session with the given name is running."""
+    try:
+        result = subprocess.run(
+            ["screen", "-list"], capture_output=True, text=True, check=True
+        )
+        # Parse the result to check for the session name
+        running_sessions = result.stdout
+        return session_name in running_sessions
+    except subprocess.CalledProcessError as e:
+        print(f"Error checking screen sessions: {e.stderr or str(e)}")
+        return False
 
 # Example usage
 if __name__ == "__main__":

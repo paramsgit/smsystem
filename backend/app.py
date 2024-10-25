@@ -157,25 +157,42 @@ def disable_user(current_user):
 @app.route("/session/start", methods=["POST"])
 @token_required
 def start_session(current_user):
-    print("req came ")
+    countries=['india','usa','canada']
+    operators={
+        'india':['Jio','Airtel','VI','BSNL'],
+        'canada':['Rogers','Telus','Bell'],
+        'usa':['Verizon','TMobile','AT&T','Mint'],
+        }
     try:
         data = request.json
-        session_name = data.get("session_name")
-        if session_name is None:
-            return {
-            "message": "Invalid data, Session Name is required",
-            "data": None,
-            "error": "Bad Request"
-        }, 400
+        country = data.get("country")
+        operator = data.get("operator")
         program = data.get("program")
+        if country is None or country not in countries:
+            return {
+            "message": "Country name is Required","error": "Bad Request" }, 400
         if program is None:
+            return {
+            "message": "Program name is Required","error": "Bad Request" }, 400
+        
+        if operator is None or operator not in operators[country]:
             return {
             "message": "Invalid data, Program is required",
             "data": None,
             "error": "Bad Request"
         }, 400
+        session_name=program+"_"+country+"_"+operator
+        program=program+".py"
+        # return jsonify({"message": "nekgnlekg"});
         message = ScreenManager.start_session(session_name, program)
-        return jsonify({"message": message})
+        
+        verify=ScreenManager.is_session_running(session_name)
+        if verify is True:
+            if message is True:
+                return jsonify({"response": True,"session_name":session_name,"message":message}),200
+            return jsonify({"response": False,"session_name":session_name,"message":message}),200
+        
+        return jsonify({"message": "Service unavailable","error":message}),503
     except Exception as e:
         return jsonify({
             "message": "failed to update account",
