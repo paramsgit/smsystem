@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react'
-import { useNavigate,Outlet } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { checkAuthToken } from '../utils/isLoggedIn'
 import Sidebar from './sidebar'
 import Container from './container'
@@ -8,7 +8,7 @@ type Props = {}
 const Home = (props: Props) => {
     const navigate = useNavigate();
     const [loggedIn,setloggedIn]=useState(false)
-    const [loading,setloading]=useState(true)
+    // const [loading,setloading]=useState(true)
     const [name,setname]=useState("")
     
     useEffect(() => {
@@ -18,7 +18,7 @@ const Home = (props: Props) => {
       }else{
         navigate("/signin")
       }
-    }, [])
+    }, [navigate])
 
     useEffect(() => {
       let authdata=localStorage.getItem('auth-token')

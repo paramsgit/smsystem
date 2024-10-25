@@ -189,13 +189,13 @@ def start_session(current_user):
         verify=ScreenManager.is_session_running(session_name)
         if verify is True:
             if message is True:
-                return jsonify({"response": True,"session_name":session_name,"message":message}),200
+                return jsonify({"response": True,"session_name":session_name,"message":"Session created successfully"}),200
             return jsonify({"response": False,"session_name":session_name,"message":message}),200
         
-        return jsonify({"message": "Service unavailable","error":message}),503
+        return jsonify({"message": message,"error":"Service unavailable"}),503
     except Exception as e:
         return jsonify({
-            "message": "failed to update account",
+            "message": "Failed to start session",
             "error": str(e),
             "data": None
         }), 400
@@ -224,8 +224,7 @@ def stop_session(current_user):
     
 
 @app.route("/session", methods=["GET"])
-@token_required
-def list_sessions(current_user):
+def list_sessions():
     try:
         sessions = ScreenManager.list_sessions()
         return jsonify({"sessions": sessions})

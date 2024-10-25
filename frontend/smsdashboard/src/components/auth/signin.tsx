@@ -26,18 +26,18 @@ const SignIn = (props: Props) => {
 
             const result=await response.json();
             if(response.ok && result.data){
-                { setalertText("Success, Redirecting...");
+                 setalertText("Success, Redirecting...");
                   setalertStatus(true); 
-                  setshowAlert(true);}
+                  setshowAlert(true);
                 localStorage.setItem('auth-token',JSON.stringify(result.data))
                 setTimeout(() => {
                     navigate("/")
                 }, 1000);
                 
             }else{
-                { setalertText(result?.message);
+                  setalertText(result?.message);
                   setalertStatus(false);
-                  setshowAlert(true);          }
+                  setshowAlert(true);          
 
             }
             console.log(result)
@@ -82,10 +82,12 @@ const SignIn = (props: Props) => {
                       </div>
                       <p className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</p>
                   </div>
+
                   <div className={`${showAlert? "opacity-100 py-3":"opacity-0 h-0"} px-4  mb-4 text-sm
                   ${alertStatus?"text-green-800 bg-green-50 dark:text-green-400":"text-red-800 bg-red-50 dark:text-red-400"}  rounded-lg  dark:bg-gray-800  smooth`} role="alert">
                      {alertText}
                     </div>
+
                   <button onClick={(e)=>{handleSubmit(e)}} type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign in</button>
                   <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                       Don’t have an account yet? <Link to={"/signup"} className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</Link>

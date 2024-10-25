@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { closeSidebar, openSidebar } from '../utils/appSlice'
+import { closeSidebar } from '../utils/appSlice'
 import { useSelector,useDispatch } from 'react-redux'
-import store from '../utils/store'
 import { RootState } from '../utils/store'
 import { Link, useNavigate } from 'react-router-dom'
 type Props = {
@@ -21,9 +20,9 @@ const Sidebar = (props: Props) => {
     }
   return (
     <div>
-        <div className='flex md:hidden'>
+        {/* <div className='flex md:hidden'>
         <button onClick={()=>{dispatch(openSidebar())}}>Op</button>
-        </div>
+        </div> */}
         <aside className={`${isSidebarOpen?"flex absolute md:relative":"hidden"}  flex-col w-64 h-screen px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700 md:flex`}>
     <div className='flex justify-between'>
         <img className="w-auto h-6 sm:h-7" src="https://merakiui.com/images/logo.svg" alt="" />
@@ -43,7 +42,7 @@ const Sidebar = (props: Props) => {
 
     <div className="flex flex-col justify-between flex-1 mt-6">
         <nav>
-            <Link onClick={()=>setactiveTab(1)} className={`flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700 ${activeTab==1 && "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200"}`} to={"/"}>
+            <Link onClick={()=>setactiveTab(1)} className={`flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700 ${activeTab===1 && "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200"}`} to={"/"}>
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M19 11H5M19 11C20.1046 11 21 11.8954 21 13V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V13C3 11.8954 3.89543 11 5 11M19 11V9C19 7.89543 18.1046 7 17 7M5 11V9C5 7.89543 5.89543 7 7 7M7 7V5C7 3.89543 7.89543 3 9 3H15C16.1046 3 17 3.89543 17 5V7M7 7H17"
@@ -53,7 +52,7 @@ const Sidebar = (props: Props) => {
                 <span className="mx-4 font-medium">Dashboard</span>
             </Link>
 
-            <Link onClick={()=>setactiveTab(2)} className={`flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700 ${activeTab==2 && "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200"}`} to={"/sms"}>
+            <Link onClick={()=>setactiveTab(2)} className={`flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700 ${activeTab===2 && "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200"}`} to={"/sms"}>
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     <path d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -62,7 +61,7 @@ const Sidebar = (props: Props) => {
                 {/* <span className="mx-4 font-medium">Accounts</span> */}
             </Link>
 
-            <a className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700" href="#">
+            {/* <a className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700" href="#">
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M15 5V7M15 11V13M15 17V19M5 5C3.89543 5 3 5.89543 3 7V10C4.10457 10 5 10.8954 5 12C5 13.1046 4.10457 14 3 14V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V14C19.8954 14 19 13.1046 19 12C19 10.8954 19.8954 10 21 10V7C21 5.89543 20.1046 5 19 5H5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
@@ -96,15 +95,15 @@ const Sidebar = (props: Props) => {
                 </svg>
 
                 <span className="mx-4 font-medium">Settings</span>
-            </a>
+            </a> */}
         </nav>
         <div className='flex justify-between items-center'>
-        <a href="#" className="flex items-center px-4 -mx-2">
+        {/* <a href="#" className="flex items-center px-4 -mx-2">
             <img className="object-cover mx-2 rounded-full h-9 w-9" src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="avatar" />
             <span className="mx-2 font-medium text-gray-800 dark:text-gray-200">
                 {props?.name}
             </span>
-        </a>
+        </a> */}
         <div>
             <button onClick={handleSignOut} className='active:scale-[0.9] text-gray-700'><svg xmlns="http://www.w3.org/2000/svg"  height="24px" viewBox="0 -960 960 960" width="24px" ><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" fill='currentColor'/></svg></button>
         </div>
