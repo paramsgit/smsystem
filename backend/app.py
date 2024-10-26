@@ -214,10 +214,12 @@ def stop_session(current_user):
             "error": "Bad Request"
         }, 400
         message = ScreenManager.stop_session(session_name)
-        return jsonify({"message": message})
+        if message is True:
+            return jsonify({"message": "Stopped successfully","response":True,"session_name":session_name}),200
+        return jsonify({"message": message}),400
     except Exception as e:
         return jsonify({
-            "message": "failed to update account",
+            "message": str(e),
             "error": str(e),
             "data": None
         }), 400

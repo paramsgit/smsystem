@@ -6,11 +6,15 @@ import { countries,operators, programs } from '../../utils/helper'
 import { Dropdown } from '../../utils/dropdown'
 import { getAuthToken } from '../../utils/isLoggedIn'
 
-type Props = {}
+type Props = {
+    refresh: boolean;
+    setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
+}
 interface Option {
     value: string;
     label: string;
   }
+ 
 const ServiceModal = (props: Props) => {
     const dispatch=useDispatch()
     const isModalOpen=useSelector((store:RootState)=>store.app.isServiceModalOpen)
@@ -60,6 +64,7 @@ const ServiceModal = (props: Props) => {
                  setalertText(result?.message);
                   setalertStatus(true); 
                   setshowAlert(true);
+                  props.setRefresh(!(props.refresh))
                
             }else{
                  setalertText(result?.message);

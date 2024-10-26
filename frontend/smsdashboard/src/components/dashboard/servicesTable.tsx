@@ -3,6 +3,10 @@ import { countryCodes } from '../../utils/helper'
 import ServiceModal from './serviceModal'
 import { useDispatch } from 'react-redux'
 import { OpenServiceModal } from '../../utils/appSlice'
+import { getAuthToken } from '../../utils/isLoggedIn'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 type Props = {}
 interface sessionDetail{
     id:string,
@@ -12,24 +16,54 @@ interface sessionDetail{
     date:string,
     time:string,
     sessionName:string,
+    status:"Active"|"Stopped"
 }
 const ServicesTable = (props: Props) => {
     const dispatch=useDispatch()
     const [sessionData,setsessionData]=useState<sessionDetail[] | null>(null)
+    const [combinedData,setcombinedData]=useState<sessionDetail[] | null>(null)
+    const [refresh,setrefresh]=useState(false)
+
     useEffect(() => {
         const getAllSessions=async()=>{
             const response=await fetch(`http://localhost:5000/session`);
             const responsedata=await response.json();
             const extractedData=extractDetails(responsedata.sessions)
             console.log(typeof(extractedData))
+            console.log(extractedData)
             setsessionData(extractedData)
         }
         getAllSessions()
      
-    }, [])
+    }, [refresh])
     
-  
+    useEffect(() => {
+        const stoppedSessions=localStorage.getItem('stoppedSessions')
+        let stoppedData;
+        if(stoppedSessions){
+            stoppedData=JSON.parse(stoppedSessions)
+        }
 
+        if(!stoppedData) return;
+        if(!sessionData) {return;}
+        const filteredStoppedData = stoppedData.filter(
+            (stoppedItem:sessionDetail) =>
+              !sessionData.some(
+                activeItem =>
+                  activeItem.countryname === stoppedItem.countryname &&
+                  activeItem.operatorname === stoppedItem.operatorname
+              )
+          );
+            const combinedData = [...sessionData, ...filteredStoppedData];
+            const toDateTime = (date: string, time: string): Date => new Date(`${date} ${time}`);
+            combinedData.sort((a, b) => toDateTime(a.date, a.time).getTime() - toDateTime(b.date, b.time).getTime());
+
+
+            setcombinedData(combinedData)
+            console.log(combinedData)
+
+    }, [sessionData])
+    
     const extractDetails = (response:string) => {
         const detailsArray:sessionDetail[] = [];
         const lines = response.split('\n');
@@ -47,7 +81,8 @@ const ServicesTable = (props: Props) => {
                   operatorname,
                   date,
                   time,
-                  sessionName
+                  sessionName,
+                  status:'Active'
                 });
                 if(_){}
               }
@@ -55,6 +90,59 @@ const ServicesTable = (props: Props) => {
           
             return detailsArray;
       }
+
+
+      
+      const handleStop=async(session:sessionDetail)=>{
+        // setdisabledBtn(true);
+
+        if(!session.sessionName){
+            toast.error("Sorry, session name not found") ; 
+                return;
+        }
+        const authToken=getAuthToken();
+        if(!authToken){
+            toast.error("Sorry, Login agin!!") ; 
+        return;
+        }
+
+
+        // const reqData=JSON.stringify({"hello"})
+        const reqData=JSON.stringify({ session_name:session.sessionName })
+
+        try {
+            const response=await fetch("http://localhost:5000/session/stop",{
+                method: "POST",
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization':`bearer ${authToken}`
+                  },
+                body: reqData,
+            })
+
+            const result=await response.json();
+            if(response.ok && result.response){
+                 toast.success("Session Stopped Successfully")
+                 const stoppedSessions=localStorage.getItem('stoppedSessions')
+                    let stoppedData=[];
+                    if(stoppedSessions){
+                        stoppedData=JSON.parse(stoppedSessions)
+                    }
+                    session.status="Stopped"
+                    stoppedData.push(session)
+                    localStorage.setItem('stoppedSessions',JSON.stringify(stoppedData))
+                    setrefresh(!refresh)
+               
+            }else{
+               toast.error(result.message)       
+                 
+            }
+
+        } catch (error) {
+            console.log(error)
+           
+        }
+    }
 
   return (
     <div>
@@ -197,7 +285,7 @@ const ServicesTable = (props: Props) => {
                            
 
                             {
-                              sessionData?.map((s:sessionDetail)=>{
+                              combinedData?.map((s:sessionDetail)=>{
                                 
                                 return  <tr key={s.id}>
                                 <td className="px-8  py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
@@ -217,17 +305,29 @@ const ServicesTable = (props: Props) => {
                                   <div className="flex justify-center md:justify-start">{s.operatorname}</div>
                                 </td>
                                 <td className="px-8 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                    {s.status==="Active"?  
                                     <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
 
-                                        <h2 className="text-sm font-normal text-emerald-500">Active</h2>
+                                    <h2 className="text-sm font-normal text-emerald-500">Active</h2>
+                                </div>
+                                    :   
+                                    <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-yellow-100/60 dark:bg-gray-800">
+
+                                        <h2 className="text-sm font-normal text-yellow-500">Stopped</h2>
                                     </div>
+                                    }
+                                    
                                 </td>
                                 <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                    <div className="flex items-center gap-x-2">
-                                        <p className="px-3 py-1 text-xs text-indigo-500 rounded-full dark:bg-gray-800 bg-indigo-100/60">Design</p>
-                                        <p className="px-3 py-1 text-xs text-blue-500 rounded-full dark:bg-gray-800 bg-blue-100/60">Product</p>
-                                        <p className="px-3 py-1 text-xs text-pink-500 rounded-full dark:bg-gray-800 bg-pink-100/60">Marketing</p>
+                                <div className="flex items-center gap-x-2">
+                                    <button type="button" className={`px-3 py-2 text-xs rounded-full font-medium text-center inline-flex items-center text-white bg-gray-700 hover:bg-gray-800 focus:outline-none  dark:bg-gray-600 dark:hover:bg-gray-700 ${s.status==="Active" && "disabled"}`}>
+                                    Restart
+                                    </button>
+                                    <button type="button" onClick={()=>{handleStop(s)}} className={`px-3 py-2 text-xs rounded-full font-medium text-center inline-flex items-center text-white bg-red-700 hover:bg-red-800  focus:outline-none dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 active:scale-[0.9] smooth ${s.status!=="Active" && "disabled"}`}>
+                                    Stop
+                                    </button>
+
                                     </div>
                                 </td>
                                
@@ -269,9 +369,22 @@ const ServicesTable = (props: Props) => {
             </a>
         </div>
     </div> */}
+    <ToastContainer
+position="bottom-center"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="light"
+
+/>
 </section>
 
-<ServiceModal/>
+<ServiceModal refresh={refresh} setRefresh={setrefresh}/>
     </div>
   )
 }

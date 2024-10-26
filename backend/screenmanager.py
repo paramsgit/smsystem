@@ -50,7 +50,7 @@ class ScreenManager:
             subprocess.run(
                 ["screen", "-S", session_name, "-X", "quit"], check=True
             )
-            return f"Stopped session: {session_name}"
+            return True
         except subprocess.CalledProcessError as e:
             return f"Error stopping session: {str(e)}"
 
