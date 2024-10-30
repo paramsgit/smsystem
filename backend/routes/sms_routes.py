@@ -14,8 +14,7 @@ sms_bp = Blueprint('sms', __name__)
 
 # Route: Fetch SMS Metrics
 @sms_bp.route('/metrics', methods=['GET'])
-@token_required
-def metrics(current_user):
+def metrics():
     """Fetch real-time SMS metrics."""
     metrics_data = get_metrics()
     return jsonify(metrics_data)

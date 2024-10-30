@@ -78,12 +78,14 @@ const SmsModal:React.FC<Props> = ({socket}) => {
 
             const result=await response.json();
             console.log(result)
-            if(response.ok && result.response){
+            if(response.ok){
+
                  setalertText(result?.message);
                   setalertStatus(true); 
                   setshowAlert(true);
                 //   props.setRefresh(!(props.refresh))
-               
+                setdisabledBtn(false)        
+
             }else{
                  setalertText(result?.message);
                   setalertStatus(false);

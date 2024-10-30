@@ -40,41 +40,35 @@ const chartConfig = {
 
 export function BarGraph() {
   return (
-    <div className="max-w-lg">
-    <Card>
-      <CardHeader>
-        <CardTitle>Bar Chart - Multiple</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={chartData}>
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
-            />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="dashed" />}
-            />
-            <Bar dataKey="Sent" fill="var(--color-Sent)" radius={4} />
-            <Bar dataKey="Failed" fill="var(--color-Failed)" radius={4} />
-          </BarChart>
-        </ChartContainer>
-      </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div>
-        <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
-        </div>
-      </CardFooter>
-    </Card>
+    <div className="max-w-md m-4 w-full">
+      <Card className="flex flex-col h-[400px]">
+        <CardHeader>
+          <CardTitle>Bar Chart - Multiple</CardTitle>
+          <CardDescription>January - June 2024</CardDescription>
+        </CardHeader>
+        <CardContent className="flex-1">
+          <ChartContainer config={chartConfig}>
+            <BarChart accessibilityLayer data={chartData}>
+              <CartesianGrid vertical={false} />
+              <XAxis
+                dataKey="month"
+                tickLine={false}
+                tickMargin={10}
+                axisLine={false}
+                tickFormatter={(value) => value.slice(0, 3)}
+              />
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent indicator="dashed" />}
+              />
+              <Bar dataKey="Sent" fill="var(--color-Sent)" radius={4} />
+              <Bar dataKey="Failed" fill="var(--color-Failed)" radius={4} />
+            </BarChart>
+          </ChartContainer>
+        </CardContent>
+       
+      </Card>
     </div>
   )
 }
+
