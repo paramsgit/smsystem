@@ -2,7 +2,7 @@ import jwt, os
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO,emit
 from screenmanager import ScreenManager
 # from save_image import save_pic
 from validate import validate_book, validate_email_and_password, validate_user
@@ -15,7 +15,19 @@ load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
-socketio = SocketIO(app)
+socketio = SocketIO(app,cors_allowed_origins="*")
+@socketio.on('connect')
+def handle_connect():
+    print('Client connected')
+    emit('server_message', {'status': 'Connected to WebSocket'})
+
+@app.route('/test_emit', methods=['GET'])
+def trigger_emit():
+    """Trigger a test WebSocket emit."""
+    print('Sending test WebSocket message...')
+    socketio.emit('sms_update', {'status': 'Test message from backend'})
+    return jsonify({"message": "Test emit triggered"}), 200
+
 SECRET_KEY = os.environ.get('SECRET_KEY') or 'this is a secret'
 print(SECRET_KEY)
 app.config['SECRET_KEY'] = SECRET_KEY

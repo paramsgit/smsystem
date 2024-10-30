@@ -9,7 +9,7 @@ const Container = (props: Props) => {
 
   return (
     <div className='w-full bg-gray-50 h-full max-h-screen p-4  overflow-y-auto'>
-        <div className=' rounded-lg h-[200vh]' >
+        <div className=' rounded-lg ' >
             <Outlet/>
         </div>
     </div>

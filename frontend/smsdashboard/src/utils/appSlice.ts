@@ -7,6 +7,7 @@ const appSlice = createSlice({
         isSidebarOpen: true,
         isSearchbarOpen: true, 
         isServiceModalOpen: false,    
+        isSmsModalOpen: false,    
     },
     reducers: {
         openSidebar: (state) => {
@@ -24,9 +25,15 @@ const appSlice = createSlice({
         CloseServiceModal: (state) => {
             state.isServiceModalOpen = false;
         },
+        OpenSmsModal: (state) => {
+            state.isSmsModalOpen = true;
+        },
+        CloseSmsModal: (state) => {
+            state.isSmsModalOpen = false;
+        },
        
     },
 });
 
-export const { openSidebar,closeSidebar, toggleSearchbar,OpenServiceModal,CloseServiceModal } = appSlice.actions;
+export const { openSidebar,closeSidebar, toggleSearchbar,OpenServiceModal,CloseServiceModal,OpenSmsModal,CloseSmsModal } = appSlice.actions;
 export default appSlice.reducer;
