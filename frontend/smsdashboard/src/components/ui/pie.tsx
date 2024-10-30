@@ -67,7 +67,7 @@ export function PieCharts({ data }: Props) {
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
        
-        <div className="leading-none text-muted-foreground">
+        <div className="leading-none px-3 text-muted-foreground">
           Showing live data of current year
         </div>
       </CardFooter>

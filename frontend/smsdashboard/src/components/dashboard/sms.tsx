@@ -103,7 +103,7 @@ return returnVal
   
   return (
     <div>
-      <button onClick={()=>{dispatch(OpenSmsModal())}}>Open</button>
+      {/* <button >Open</button> */}
       <SmsModal socket={socket}/>
       <div className='flex flex-col md:flex-row justify-evenly items-center'> 
       <BarGraph />
@@ -118,6 +118,25 @@ return returnVal
          
       ))}
          </div>
+
+         <section className="bg-white rounded-xl mb-4 dark:bg-gray-900">
+    <div className="container flex flex-col items-center px-4 py-12 mx-auto text-center">
+        <h2 className="max-w-2xl mx-auto text-2xl font-semibold tracking-tight text-gray-800 xl:text-3xl dark:text-white">
+            Bring your Business to the <span className="text-blue-500">next level.</span>
+        </h2>
+
+        <p className="max-w-4xl mt-6 text-center text-gray-500 dark:text-gray-300">
+        Experience seamless SMS sending with our service. We ensure timely delivery, reliable communication, and user-friendly features to meet your needs. Trust us to keep you connected effortlessly and efficiently. Join us today and elevate your messaging experience with our exceptional service!
+        </p>
+
+        <div className="inline-flex  w-full mt-6 sm:w-auto">
+            <button onClick={()=>{dispatch(OpenSmsModal())}} className="inline-flex items-center justify-center w-full px-6 py-2 text-white duration-300 bg-blue-600 rounded-lg hover:bg-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+                Send SMS
+            </button>
+        </div>
+    </div>
+</section>
+
     </div>
   )
 }

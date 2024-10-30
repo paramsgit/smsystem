@@ -12,6 +12,7 @@ import Signup from './components/auth/signup';
 import ErrorPage from './components/errorPage';
 import { Services } from './components/dashboard/services';
 import Sms from './components/dashboard/sms';
+import Prioritize from './components/dashboard/prioritize';
 function App() {
   const router = createBrowserRouter([
     {
@@ -26,7 +27,11 @@ function App() {
         {
           path:"/sms",
           element:<Sms/>
-        }
+        },
+        {
+          path:"/co",
+          element:<Prioritize/>
+        },
       ]
     },
     {
