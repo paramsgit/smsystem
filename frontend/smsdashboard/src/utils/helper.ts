@@ -8,6 +8,10 @@ export const programs=[
 { value: "program1", label: "program1" },
 { value: "program2", label: "program2" },
 ]
+export const priority=[
+{ value: "1", label: "Yes" },
+{ value: "0", label: "No" },
+]
 
 
 interface Option {

@@ -8,8 +8,7 @@ from models.country_operator_model import (
 operator_bp = Blueprint('operator', __name__)
 
 @operator_bp.route('/pairs', methods=['GET'])
-@token_required
-def get_pairs(_):
+def get_pairs():
     """Fetch all country-operator pairs."""
     pairs = get_all_pairs()
     return jsonify(pairs), 200
@@ -33,7 +32,7 @@ def add_pair(_):
         operator=data['operator']
         
         if pair_exists(country, operator):
-            return jsonify({"error": f"Pair ({country}, {operator}) already exists"}), 409
+            return jsonify({"message": f"Pair ({country}, {operator}) already exists"}), 409
 
         create_pair(country, operator, data.get('is_high_priority', False))
 
@@ -60,7 +59,7 @@ def update_pair_priority(_,pair_id):
             return { "message": "Invalid data, pair Id is needed ", "error": "Bad Request" }, 400
         updated=update_pair(pair_id, data['is_high_priority'])
         if not updated:
-            return jsonify({"error": f"Pair with ID {pair_id} does not exist"}), 404
+            return jsonify({"message": f"Pair with ID {pair_id} does not exist"}), 404
 
         return jsonify({"message": f"Pair with ID {pair_id} updated successfully"}), 200
 
@@ -74,9 +73,14 @@ def update_pair_priority(_,pair_id):
 @token_required
 def delete_pair_route(_,pair_id):
     """Delete a country-operator pair if it's not high-priority."""
-    if pair_id is None:
-        return { "message": "Invalid data, pair Id is needed ", "error": "Bad Request" }, 400
-    Deleted=delete_pair(pair_id)
-    if not Deleted:
-        return jsonify({"error": f"Pair with ID {pair_id} does not exist"}), 404
-    return jsonify({"message": "Pair deleted successfully "}), 200
+    try:
+        if pair_id is None:
+            return { "message": "Invalid data, pair Id is needed ", "error": "Bad Request" }, 400
+        Deleted=delete_pair(pair_id)
+        if not Deleted:
+            return jsonify({"message": f"Pair with ID {pair_id} does not exist"}), 404
+        return jsonify({"message": "Pair deleted successfully "}), 200
+    except Exception as e:
+        return jsonify({ "message": "failed to update pairs", "error": str(e), "data": None }), 400
+
+    

@@ -1,5 +1,5 @@
 import React from 'react'
-import ServicesTable from './servicesTable'
+import ServicesTable from '../ui/servicesTable'
 
 type Props = {}
 

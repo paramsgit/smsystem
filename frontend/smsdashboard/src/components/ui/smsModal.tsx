@@ -10,7 +10,7 @@ import { Socket } from 'socket.io-client';
 
 
 type Props = {
-    socket: Socket;
+    
 
     // refresh: boolean;
     // setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,7 +20,7 @@ interface Option {
     label: string;
   }
  
-const SmsModal:React.FC<Props> = ({socket}) => {
+const SmsModal:React.FC<Props> = () => {
     const dispatch=useDispatch()
     // const socket=props.socket
     const isModalOpen=useSelector((store:RootState)=>store.app.isSmsModalOpen)
@@ -101,7 +101,7 @@ const SmsModal:React.FC<Props> = ({socket}) => {
             setshowAlert(true);
             setdisabledBtn(false);
         }
-        socket.off('sms_update');
+        
     }
     
 

@@ -62,7 +62,8 @@ def delete_pair(pair_id):
         db.close()
         return False  # Pair does not exist
 
-    query = "DELETE FROM country_operator_pairs WHERE id = %s AND is_high_priority = FALSE"
+    query = "DELETE FROM country_operator_pairs WHERE id = %s"
+    # query = "DELETE FROM country_operator_pairs WHERE id = %s AND is_high_priority = FALSE"
     cursor.execute(query, (pair_id,))
     db.commit()
     cursor.close()

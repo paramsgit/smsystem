@@ -1,13 +1,13 @@
 import React, { useEffect,useRef, useState } from 'react'
 import { OpenSmsModal } from '../../utils/appSlice'
 import { useDispatch } from 'react-redux'
-import SmsModal from './smsModal'
+import SmsModal from '../ui/smsModal'
 import { io } from 'socket.io-client'
 import { BarGraph } from '../ui/chartsCompo'
 import { RadialChart } from '../ui/radialCharts'
 import { PieCharts } from '../ui/pie'
 type Props = {}
-const socket = io('http://127.0.0.1:5000');
+
 
 const Sms = (props: Props) => {
   const dispatch=useDispatch()
@@ -16,18 +16,7 @@ const Sms = (props: Props) => {
   const [pieData, setpieData] = useState<TransformedData>({});
   const [totalC,settotalC]=useState(0)
   const [passed,setpassed]=useState(0)
-  useEffect(() => {
-    socket.on('server_message', (data: { status: string }) => {
-      console.log('Connection status:', data);
-    });
-    socket.on('sms_update', (data: { status: string }) => {
-      console.log('Sms status:', data);
-    });
-  
-    return () => {
-      socket.off('server_message');
-    }
-  }, [socket])
+
 
   type SmsData = {
     count: number;
@@ -104,7 +93,7 @@ return returnVal
   return (
     <div>
       {/* <button >Open</button> */}
-      <SmsModal socket={socket}/>
+      <SmsModal />
       <div className='flex flex-col md:flex-row justify-evenly items-center'> 
       <BarGraph />
       <RadialChart total={totalC} passed={passed}/>

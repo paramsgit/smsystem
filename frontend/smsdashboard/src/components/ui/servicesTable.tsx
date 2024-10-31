@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { countryCodes } from '../../utils/helper'
 import ServiceModal from './serviceModal'
 import { useDispatch } from 'react-redux'
+import { io } from 'socket.io-client'
 import { OpenServiceModal } from '../../utils/appSlice'
 import { getAuthToken } from '../../utils/isLoggedIn'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SystemUsage from './systemUsage'
 
 type Props = {}
 interface sessionDetail{
@@ -18,11 +20,30 @@ interface sessionDetail{
     sessionName:string,
     status:"Active"|"Stopped"
 }
+interface systemDetails{
+    free_ram: number, total_ram: number, cpu_usage: number
+}
+const socket = io('http://127.0.0.1:5000');
+
 const ServicesTable = (props: Props) => {
     const dispatch=useDispatch()
     const [sessionData,setsessionData]=useState<sessionDetail[] | null>(null)
     const [combinedData,setcombinedData]=useState<sessionDetail[] | null>(null)
+    const [systemDetails,setsystemDetails]=useState<systemDetails | null>(null)
     const [refresh,setrefresh]=useState(false)
+
+    useEffect(() => {
+        socket.on('server_message', (data: { status: string }) => {
+          console.log('Connection status:', data);
+        });
+        socket.on('system_stats', (data:systemDetails) => {
+          setsystemDetails(data)
+        });
+      
+        return () => {
+          socket.off('server_message');
+        }
+      }, [socket])
 
     useEffect(() => {
         const getAllSessions=async()=>{
@@ -186,17 +207,21 @@ const ServicesTable = (props: Props) => {
   return (
     <div>
     <section className="container px-4 mx-auto">
-    <div className="sm:flex sm:items-center sm:justify-between">
-        <div>
-            <div className="flex items-center gap-x-3">
-                <h2 className="text-lg font-medium text-gray-800 dark:text-white">Customers</h2>
+    <div className="flex items-center justify-between mb-8">
 
-                <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">240 vendors</span>
+        <div>
+            <div className="flex flex-col sm:flex-row items-center gap-x-3">
+                <h2 className="text-lg font-medium text-gray-800 dark:text-white">Sessions</h2>
+
+                <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">3 Active</span>
             </div>
 
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">These companies have purchased in the last 12 months.</p>
+            <p className="mt-1 hidden sm:block text-sm text-gray-500 dark:text-gray-300">
+             
+            Click Add button to start a new session
+            </p>
         </div>
-
+        {systemDetails && <SystemUsage data={systemDetails}/>}
       
     </div>
 

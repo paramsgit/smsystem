@@ -1,10 +1,11 @@
-import jwt, os
+import jwt, os,time
+import psutil
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_socketio import SocketIO,emit
 from screenmanager import ScreenManager
-# from save_image import save_pic
+from threading import Thread
 from validate import validate_book, validate_email_and_password, validate_user
 from models.models import User
 from auth_middleware import token_required
@@ -16,6 +17,11 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 socketio = SocketIO(app,cors_allowed_origins="*")
+SECRET_KEY = os.environ.get('SECRET_KEY') or 'this is a secret'
+app.config['SECRET_KEY'] = SECRET_KEY
+app.register_blueprint(sms_bp, url_prefix='/api')
+app.register_blueprint(operator_bp, url_prefix='/api/operators')
+
 @socketio.on('connect')
 def handle_connect():
     print('Client connected')
@@ -28,12 +34,25 @@ def trigger_emit():
     socketio.emit('sms_update', {'status': 'Test message from backend'})
     return jsonify({"message": "Test emit triggered"}), 200
 
-SECRET_KEY = os.environ.get('SECRET_KEY') or 'this is a secret'
-print(SECRET_KEY)
-app.config['SECRET_KEY'] = SECRET_KEY
-app.register_blueprint(sms_bp, url_prefix='/api')
-app.register_blueprint(operator_bp, url_prefix='/api/operators')
+def emit_system_stats():
+    while True:
+        # Get memory and CPU usage stats
+        free_ram = psutil.virtual_memory().available / (1024 ** 2)  
+        total_ram = psutil.virtual_memory().total / (1024 ** 2)   
+        cpu_usage = psutil.cpu_percent()                           
+        
+        socketio.emit('system_stats', {
+            'free_ram': f"{free_ram:.2f}",   # Format to two decimal places
+            'total_ram': f"{total_ram:.2f}", # Format to two decimal places
+            'cpu_usage': f"{cpu_usage:.2f}"  # Format to two decimal places
+        })
+        
+        time.sleep(1)
 
+# Start background thread for system stats emission
+thread = Thread(target=emit_system_stats)
+thread.daemon = True
+thread.start()
 
 
 @app.route("/")
