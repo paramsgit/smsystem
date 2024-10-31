@@ -11,11 +11,10 @@ type Props = {}
 
 const Sms = (props: Props) => {
   const dispatch=useDispatch()
-  const barGraphRef = useRef(null);
-  const radialChartRef = useRef(null);
   const [pieData, setpieData] = useState<TransformedData>({});
   const [totalC,settotalC]=useState(0)
   const [passed,setpassed]=useState(0)
+  const [refresh,setrefresh]=useState(false)
 
 
   type SmsData = {
@@ -31,14 +30,6 @@ const Sms = (props: Props) => {
     };
   };
   
-  const inputData: SmsData[] = [
-    { count: 15, country: "India", operator: "Jio", status: "sent" },
-    { count: 21, country: "India", operator: "Airtel", status: "sent" },
-    { count: 1, country: "india", operator: "VI", status: "failed" },
-    { count: 2, country: "india", operator: "VI", status: "sent" },
-    { count: 1, country: "usa", operator: "Verizon", status: "failed" },
-    { count: 1, country: "usa", operator: "Verizon", status: "sent" },
-  ];
   
   function transformData(data: SmsData[]): TransformedData {
     let totalCount=0;
@@ -85,7 +76,7 @@ return returnVal
 
     // const transformedData = transformData(inputData);
 
-  }, [])
+  }, [refresh])
     
   
 
@@ -99,9 +90,7 @@ return returnVal
       <RadialChart total={totalC} passed={passed}/>
       </div>
       <div className='flex justify-evenly flex-wrap py-8'>
-        {/* <PieCharts/>
-        <PieCharts/>
-        <PieCharts/> */}
+
         {Object.entries(pieData).map((p) => (
           <PieCharts data={p}/>
          

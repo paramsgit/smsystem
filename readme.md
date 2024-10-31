@@ -1,4 +1,15 @@
-# System Management System - Backend Documentation
+# System Management Dashboard 
+
+The frontend dashboard for managing system resources, users, and tasks. Built with TypeScript and React, this interface allows users to view, create, update, and delete system data seamlessly.
+
+- Dashboard
+https://github.com/paramsgit/smsystem/tree/main/frontend
+
+
+
+
+
+# Backend Documentation
 
 This is the backend API for the System Management System (SMS). The API is built using Flask and serves as the backbone for managing system-related tasks and user data.
 
