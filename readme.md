@@ -3,7 +3,33 @@
 The frontend dashboard for managing system resources, users, and tasks. Built with TypeScript and React, this interface allows users to view, create, update, and delete system data seamlessly.
 
 - Dashboard
-https://github.com/paramsgit/smsystem/tree/main/frontend
+
+![alt text](frontend/Screenshots/img1.png)
+
+- Metrics
+
+![alt text](frontend/Screenshots/img2.png)
+
+- Country - Operator Pairs
+
+![alt text](frontend/Screenshots/img3.png)
+
+- Priority Update
+
+![alt text](frontend/Screenshots/img4.png)
+
+- Priority Update
+
+![alt text](frontend/Screenshots/img5.png)
+
+- Priority Update
+
+![alt text](frontend/Screenshots/img6.png)
+
+- Priority Update
+
+![alt text](frontend/Screenshots/img7.png)
+
 
 
 
