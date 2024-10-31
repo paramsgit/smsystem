@@ -2,8 +2,8 @@
 
 The frontend dashboard for managing system resources, users, and tasks. Built with TypeScript and React, this interface allows users to view, create, update, and delete system data seamlessly.
 
-## DEMO
-![Demo Video](smsdashboardVid.mp4)
+## Architecture
+![Demo Video](Arch.png)
 
 
 - Dashboard
