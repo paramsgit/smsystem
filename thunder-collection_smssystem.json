@@ -1,0 +1,221 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "sms",
+    "collectionId": "ec27d3e2-7bfa-47a2-9708-84b7296861a8",
+    "dateExported": "2024-10-31T11:26:06.832Z",
+    "version": "1.2",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "84f1423e-1011-45fa-b209-25cdd448e79f",
+            "colId": "ec27d3e2-7bfa-47a2-9708-84b7296861a8",
+            "containerId": "",
+            "name": "login",
+            "url": "http://localhost:5000/users/login",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-10-22T17:23:27.079Z",
+            "modified": "2024-10-22T17:24:16.727Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\":\"abc@gmail.com\",\n  \"password\":\"P@ram1234\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "d06e77cb-1707-477a-a3a8-71ba4621755f",
+            "colId": "ec27d3e2-7bfa-47a2-9708-84b7296861a8",
+            "containerId": "",
+            "name": "start_session",
+            "url": "http://localhost:5000/session/start",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-10-23T03:28:21.870Z",
+            "modified": "2024-10-25T04:33:00.792Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiNjcxN2Q4ZDdhNDQ0N2RiNGUxMDA2YzBiIn0.sgEsPD0IDMCgcQhyLvYl90i3BVft7sLTbAPkbInCZMc"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"country\":\"india\",\n  \"operator\":\"Jio\",\n  \"program\":\"program1\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "e3aa3f6d-cbee-45dc-9199-31c67bbda186",
+            "colId": "ec27d3e2-7bfa-47a2-9708-84b7296861a8",
+            "containerId": "",
+            "name": "stop_session",
+            "url": "http://localhost:5000/session/stop",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2024-10-23T07:45:37.807Z",
+            "modified": "2024-10-31T10:49:00.407Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiNjcxN2Q4ZDdhNDQ0N2RiNGUxMDA2YzBiIn0.sgEsPD0IDMCgcQhyLvYl90i3BVft7sLTbAPkbInCZMc"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"session_name\":\"program1_usa_Mint\",\n  \"program\":\"program1.py\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "d8403459-2937-42dd-92ae-0b01bebd3a46",
+            "colId": "ec27d3e2-7bfa-47a2-9708-84b7296861a8",
+            "containerId": "",
+            "name": "getsessions",
+            "url": "http://localhost:5000/session",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2024-10-23T07:45:52.687Z",
+            "modified": "2024-10-23T07:46:21.966Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiNjcxN2Q4ZDdhNDQ0N2RiNGUxMDA2YzBiIn0.sgEsPD0IDMCgcQhyLvYl90i3BVft7sLTbAPkbInCZMc"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"session_name\":\"firstp1\",\n  \"program\":\"program1.py\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "7d075dc7-ea32-49f0-a084-df475dc30ac7",
+            "colId": "ec27d3e2-7bfa-47a2-9708-84b7296861a8",
+            "containerId": "",
+            "name": "getmatrics",
+            "url": "http://localhost:5000/api/metrics",
+            "method": "GET",
+            "sortNum": 60000,
+            "created": "2024-10-23T09:17:56.680Z",
+            "modified": "2024-10-23T09:18:22.797Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiNjcxN2Q4ZDdhNDQ0N2RiNGUxMDA2YzBiIn0.sgEsPD0IDMCgcQhyLvYl90i3BVft7sLTbAPkbInCZMc"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"session_name\":\"firstp1\",\n  \"program\":\"program1.py\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "3f5f91ce-c938-44ec-bf8e-7e0db3b6cb4f",
+            "colId": "ec27d3e2-7bfa-47a2-9708-84b7296861a8",
+            "containerId": "",
+            "name": "sendsms",
+            "url": "http://localhost:5000/api/send_sms",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2024-10-23T09:31:33.552Z",
+            "modified": "2024-10-28T16:00:58.904Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiNjcxN2Q4ZDdhNDQ0N2RiNGUxMDA2YzBiIn0.sgEsPD0IDMCgcQhyLvYl90i3BVft7sLTbAPkbInCZMc"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"country\":\"india\",\n  \"phone_number\":\"9419494194\",\n  \"proxy\":\"india\",\n  \"operator\":\"VI\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "588a0368-a7f7-44d4-a6ad-61599304d5d7",
+            "colId": "ec27d3e2-7bfa-47a2-9708-84b7296861a8",
+            "containerId": "",
+            "name": "addpair",
+            "url": "http://localhost:5000/api/operators/pairs",
+            "method": "POST",
+            "sortNum": 80000,
+            "created": "2024-10-23T16:31:23.791Z",
+            "modified": "2024-10-24T05:56:22.315Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiNjcxN2Q4ZDdhNDQ0N2RiNGUxMDA2YzBiIn0.sgEsPD0IDMCgcQhyLvYl90i3BVft7sLTbAPkbInCZMc"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"phone_number\":\"9419494194\",\n  \"proxy\":\"India\",\n  \"operator\":\"Jio\",\n  \"country\":\"India\",\n  \"is_high_priority\":true\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "94f5c2f6-8b30-494c-8b40-ccbb338a6561",
+            "colId": "ec27d3e2-7bfa-47a2-9708-84b7296861a8",
+            "containerId": "",
+            "name": "getallapirs",
+            "url": "http://localhost:5000/api/operators/pairs",
+            "method": "GET",
+            "sortNum": 85000,
+            "created": "2024-10-24T05:55:36.725Z",
+            "modified": "2024-10-24T05:56:00.123Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiNjcxN2Q4ZDdhNDQ0N2RiNGUxMDA2YzBiIn0.sgEsPD0IDMCgcQhyLvYl90i3BVft7sLTbAPkbInCZMc"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"phone_number\":\"9419494194\",\n  \"proxy\":\"India\",\n  \"operator\":\"Airtel\",\n  \"country\":\"India\",\n  \"is_high_priority\":true\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "e135ce69-8629-48e7-8607-07f2e12f43e8",
+            "colId": "ec27d3e2-7bfa-47a2-9708-84b7296861a8",
+            "containerId": "",
+            "name": "updatepair",
+            "url": "http://localhost:5000/api/operators/pairs/",
+            "method": "PUT",
+            "sortNum": 90000,
+            "created": "2024-10-24T05:31:42.216Z",
+            "modified": "2024-10-31T05:25:30.460Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiNjcxN2Q4ZDdhNDQ0N2RiNGUxMDA2YzBiIn0.sgEsPD0IDMCgcQhyLvYl90i3BVft7sLTbAPkbInCZMc"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n \n  \"is_high_priority\":false\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "26783e99-3d00-494d-abd0-2f8b145a4753",
+            "colId": "ec27d3e2-7bfa-47a2-9708-84b7296861a8",
+            "containerId": "",
+            "name": "deletepair",
+            "url": "http://localhost:5000/api/operators/pairs/2",
+            "method": "DELETE",
+            "sortNum": 100000,
+            "created": "2024-10-24T05:34:07.452Z",
+            "modified": "2024-10-24T05:40:33.222Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiNjcxN2Q4ZDdhNDQ0N2RiNGUxMDA2YzBiIn0.sgEsPD0IDMCgcQhyLvYl90i3BVft7sLTbAPkbInCZMc"
+                }
+            ]
+        }
+    ],
+    "ref": "aZKw6fxczGKPp1b-LUsO5hpcgRtG5MJe7HTi7mL4i-sVyDfoqp_kBm_CwtLgJkhpXW0cHz6WYqFbEem6UnZosA"
+}

@@ -59,6 +59,10 @@ thread.start()
 def hello():
     return "Hello World!"
 
+@app.route('/docs')
+def docs():
+    return auto.html()
+
 @app.route("/users/", methods=["POST"])
 def add_user():
     try:
@@ -71,7 +75,7 @@ def add_user():
             }, 400
         is_validated = validate_user(**user)
         if is_validated is not True:
-            return dict(message='Invalid data', data=None, error=is_validated), 400
+            return dict(message=is_validated, data=None, error=is_validated), 400
         user = User().create(**user)
         if not user:
             return {

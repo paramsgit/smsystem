@@ -34,6 +34,7 @@ const ServiceModal = (props: Props) => {
     }, [selectedCountry])
 
     const handleSubmit=async(e:any)=>{
+        setalertText("Wait..")
         setdisabledBtn(true);
 
         if(!selectedProgram || !selectedOperator || !selectedCountryValue){

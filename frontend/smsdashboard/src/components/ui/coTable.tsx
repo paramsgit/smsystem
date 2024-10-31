@@ -30,8 +30,8 @@ export const CoTable: React.FC<Props> = ({ data,refresh,setRefresh }) => {
     <div className="w-full bg-center rounded-xl bg-cover h-[12rem]" style={{backgroundImage:"url('/earth.jpeg')"}}>
         <div className="flex items-center justify-center w-full h-full ">
             <div className="text-center">
-                <h1 className="text-lg font-semibold text-white lg:text-2xl">Create new country operator priority pair </h1>
-                <button onClick={()=>{setmodalState("add");dispatch(OpenPriorityModal())}} className="w-full px-5 py-2 mt-4 text-sm font-medium text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md lg:w-auto hover:bg-blue-500 focus:outline-none focus:bg-blue-500">Create New</button>
+                <h1 className="text-lg font-semibold text-white lg:text-2xl ">Create new country operator priority pair </h1>
+                <button onClick={()=>{setmodalState("add");dispatch(OpenPriorityModal())}} className="w-full px-5 py-2 mt-4 text-sm  font-medium text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md lg:w-auto hover:bg-blue-500 focus:outline-none focus:bg-blue-500">Create New</button>
             </div>
         </div>
     </div>
@@ -90,7 +90,7 @@ export const CoTable: React.FC<Props> = ({ data,refresh,setRefresh }) => {
             </div>
             <h1 className="mt-3 text-lg text-gray-800 dark:text-white">No Pair found</h1>
             <p className="mt-2 text-gray-500 dark:text-gray-400">No country-Operator priority pair found. Please try again or create a new pair.</p>
-            <div className="flex items-center mt-4 sm:mx-auto gap-x-3">
+            <div className="flex items-center justify-center mt-4 sm:mx-auto gap-x-3">
 
                 <button onClick={()=>{setmodalState("add");dispatch(OpenPriorityModal())}} className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-5 h-5">

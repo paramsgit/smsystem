@@ -55,13 +55,10 @@ const SmsModal:React.FC<Props> = () => {
             return;
         }
 
-
-
         const authToken=getAuthToken();
         if(!authToken){setalertText(`Error, Login again!!
         `);setalertStatus(false); setshowAlert(true);setdisabledBtn(false);
         return;
-
         }
 
         const reqData=JSON.stringify({ country:selectedCountryValue,proxy:selectedCountryValue,operator:selectedOperator.value,phone_number:Mobile })
@@ -80,14 +77,13 @@ const SmsModal:React.FC<Props> = () => {
             console.log(result)
             if(response.ok){
 
-                 setalertText(result?.message);
+                  setalertText(result?.message);
                   setalertStatus(true); 
                   setshowAlert(true);
-                //   props.setRefresh(!(props.refresh))
-                setdisabledBtn(false)        
+                  setdisabledBtn(false)        
 
             }else{
-                 setalertText(result?.message);
+                  setalertText(result?.message);
                   setalertStatus(false);
                   setshowAlert(true); 
                   setdisabledBtn(false)        
@@ -108,15 +104,10 @@ const SmsModal:React.FC<Props> = () => {
   return (
     <div>
         <div className="relative flex justify-center">
-    {/* <button className="px-6 py-2 mx-auto tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
-        Open Modal
-    </button> */}
 
     <div
         
-        className={`fixed ${isModalOpen?"":"hidden"} inset-0 z-10 overflow-y-auto bg-black/70`} 
-        
-    >
+        className={`fixed ${isModalOpen?"":"hidden"} inset-0 z-10 overflow-y-auto bg-black/70`}  >
         <div className="flex items-end justify-center min-h-screen px-4 pt-4  text-center sm:block sm:p-0">
             <span className="hidden sm:inline-block sm:h-screen sm:align-middle" aria-hidden="true">&#8203;</span>
 

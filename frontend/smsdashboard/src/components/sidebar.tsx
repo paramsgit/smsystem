@@ -30,11 +30,14 @@ const Sidebar = (props: Props) => {
         {/* <div className='flex md:hidden'>
         <button onClick={()=>{dispatch(openSidebar())}}>Op</button>
         </div> */}
-        <aside className={`${isSidebarOpen?"flex absolute md:relative":"hidden"}  flex-col w-64 h-screen px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700 md:flex`}>
+        <aside className={`${isSidebarOpen?"flex absolute md:relative":"hidden"} z-30  flex-col w-64 h-screen px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700 md:flex`}>
     <div className='flex justify-between'>
-        <img className="w-auto h-6 sm:h-7" src="https://merakiui.com/images/logo.svg" alt="" />
-        <button className='md:hidden' onClick={()=>{console.log("first");dispatch(closeSidebar())}}>X</button>
-
+        <img className="w-auto h-6 sm:h-7" src="/logo.png" alt="" />
+        <button className='md:hidden text-gray-400' onClick={()=>{console.log("first");dispatch(closeSidebar())}}>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-x" viewBox="0 0 16 16">
+  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+</svg>
+        </button>
     </div>
 
     <div className="relative mt-6">
@@ -64,7 +67,7 @@ const Sidebar = (props: Props) => {
                     <path d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     <path d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                    <span className='mx-4 font-medium'> Accounts</span>
+                    <span className='mx-4 font-medium'> SMS</span>
                 {/* <span className="mx-4 font-medium">Accounts</span> */}
             </Link>
 
