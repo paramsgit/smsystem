@@ -18,15 +18,15 @@ The frontend dashboard for managing system resources, users, and tasks. Built wi
 
 ![alt text](frontend/Screenshots/img4.png)
 
-- Priority Update
+- Priority Table with Actions
 
 ![alt text](frontend/Screenshots/img5.png)
 
-- Priority Update
+- Send Sms
 
 ![alt text](frontend/Screenshots/img6.png)
 
-- Priority Update
+- Responsive Web-app
 
 ![alt text](frontend/Screenshots/img7.png)
 
