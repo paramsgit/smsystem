@@ -59,23 +59,20 @@ thread.start()
 def hello():
     return "Hello World!"
 
-@app.route('/docs')
-def docs():
-    return auto.html()
 
 @app.route("/users/", methods=["POST"])
 def add_user():
     try:
         user = request.json
         if not user:
-            return {
+            return jsonify({
                 "message": "Please provide user details",
                 "data": None,
                 "error": "Bad request"
-            }, 400
+            }), 400
         is_validated = validate_user(**user)
         if is_validated is not True:
-            return dict(message=is_validated, data=None, error=is_validated), 400
+            return jsonify({"message":is_validated, "data":None, "error":is_validated}), 400
         user = User().create(**user)
         if not user:
             return {
@@ -107,7 +104,7 @@ def login():
         # validate input
         is_validated = validate_email_and_password(data.get('email'), data.get('password'))
         if is_validated is not True:
-            return dict(message="Check your email and password again", data=None, error=is_validated), 400
+            return jsonify({"message":"Check your email and password again", "data":None, "error":is_validated}), 400
         user = User().login(
             data["email"],
             data["password"]
@@ -243,11 +240,11 @@ def stop_session(current_user):
         data = request.json
         session_name = data.get("session_name")
         if session_name is None:
-            return {
+            return jsonify({
             "message": "Invalid data, Session Name is required",
             "data": None,
             "error": "Bad Request"
-        }, 400
+        }), 400
         message = ScreenManager.stop_session(session_name)
         if message is True:
             return jsonify({"message": "Stopped successfully","response":True,"session_name":session_name}),200

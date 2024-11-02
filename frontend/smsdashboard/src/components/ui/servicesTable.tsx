@@ -47,10 +47,15 @@ const ServicesTable = (props: Props) => {
 
     useEffect(() => {
         const getAllSessions=async()=>{
-            const response=await fetch(`http://localhost:5000/session`);
-            const responsedata=await response.json();
-            const extractedData=extractDetails(responsedata.sessions)
-            setsessionData(extractedData)
+            try {
+                const response=await fetch(`http://localhost:5000/session`);
+                const responsedata=await response.json();
+                const extractedData=extractDetails(responsedata.sessions)
+                setsessionData(extractedData)
+            } catch (error) {
+                
+            }
+           
         }
         getAllSessions()
      
@@ -63,8 +68,8 @@ const ServicesTable = (props: Props) => {
             stoppedData=JSON.parse(stoppedSessions)
         }
 
-        if(!stoppedData) return;
-        if(!sessionData) {return;}
+        if(!stoppedData) { setcombinedData(sessionData);return};
+        if(!sessionData) { setcombinedData(stoppedData);return;}
         const filteredStoppedData = stoppedData.filter(
             (stoppedItem:sessionDetail) =>
               !sessionData.some(
@@ -213,7 +218,7 @@ const ServicesTable = (props: Props) => {
             <div className="flex flex-col sm:flex-row items-center gap-x-3">
                 <h2 className="text-lg font-medium text-gray-800 dark:text-white">Sessions</h2>
 
-                <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">3 Active</span>
+                <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">{sessionData?.length} Active</span>
             </div>
 
             <p className="mt-1 hidden sm:block text-sm text-gray-500 dark:text-gray-300">
@@ -293,43 +298,7 @@ const ServicesTable = (props: Props) => {
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900 ">
                             
-                            <tr>
-                                <td className="px-8  py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                    <div className="inline-flex items-center gap-x-3">
-                                       
-
-                                        <div className="flex items-center gap-x-2">
-                                            <img className="object-cover w-10 h-10 rounded-md" src="https://flagsapi.com/IN/flat/64.png" alt="" />
-                                            <div>
-                                                <h2 className="font-medium text-gray-800 dark:text-white ">India</h2>
-                                                <p className="text-xs font-normal text-gray-500 dark:text-gray-400">@authurmelo</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                  <div className="flex justify-center md:justify-start">Jio</div>
-                                </td>
-                                <td className="px-8 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                    <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-
-                                        <h2 className="text-sm font-normal text-emerald-500">Active</h2>
-                                    </div>
-                                </td>
-                                <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                    <div className="flex items-center gap-x-2">
-                                    <button type="button" className="px-3 py-2 text-xs rounded-full font-medium text-center inline-flex items-center text-white bg-gray-700 hover:bg-gray-800 focus:outline-none  dark:bg-gray-600 dark:hover:bg-gray-700 ">
-                                    Restart
-                                    </button>
-                                    <button type="button" className="px-3 py-2 text-xs rounded-full font-medium text-center inline-flex items-center text-white bg-red-700 hover:bg-red-800  focus:outline-none dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 active:scale-[0.9] smooth">
-                                    Stop
-                                    </button>
-
-                                    </div>
-                                </td>
-                               
-                            </tr>
+                        
                            
 
                             {
@@ -385,6 +354,9 @@ const ServicesTable = (props: Props) => {
                            
                         </tbody>
                     </table>
+                   {!combinedData && <div className='w-full px-4 py-3 flex justify-center'>
+                        No items found
+                    </div>}
                 </div>
             </div>
         </div>

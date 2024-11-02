@@ -18,6 +18,27 @@ import {
   ChartTooltipContent,
 } from "./charts"
 
+
+type StatusCounts = {
+  failed: number;
+  sent: number;
+};
+
+type DataEntry = {
+  count: number;
+  country: string;
+  operator: string;
+  status: string;
+};
+
+type ChartData = {
+  country: string;
+  Sent: number;
+  Failed: number;
+};
+type ChartDisplayProps = {
+  data: ChartData[];
+};
 export const description = "A multiple bar chart"
 
 const chartData = [
@@ -38,7 +59,8 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function BarGraph() {
+export function BarGraph({data}:ChartDisplayProps) {
+  console.log(data)
   return (
     <div className="max-w-md m-4 w-full">
       <Card className="flex flex-col h-[400px]">
@@ -48,10 +70,11 @@ export function BarGraph() {
         </CardHeader>
         <CardContent className="flex-1">
           <ChartContainer config={chartConfig}>
-            <BarChart accessibilityLayer data={chartData}>
+            
+            <BarChart accessibilityLayer data={data}>
               <CartesianGrid vertical={false} />
               <XAxis
-                dataKey="month"
+                dataKey="country"
                 tickLine={false}
                 tickMargin={10}
                 axisLine={false}

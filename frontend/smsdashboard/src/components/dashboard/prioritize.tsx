@@ -11,10 +11,15 @@ const Prioritize = (props: Props) => {
 
   
     const getpairs=async()=>{
+      try {
         const response=await fetch(`http://localhost:5000/api/operators/pairs`);
         const responsedata=await response.json();
         console.log(responsedata)
         setpairsData(responsedata)
+      } catch (error) {
+        
+      }
+        
     }
     getpairs()
  

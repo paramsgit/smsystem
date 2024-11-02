@@ -28,22 +28,27 @@ const Signup = (props: Props) => {
 
             const result=await response.json();
             if(response.ok && result.data){
-                 setalertText("Success, Redirecting...");
+                 setalertText("Success, You can login now");
                   setalertStatus(true); 
                   setshowAlert(true);
-                localStorage.setItem('auth-token',JSON.stringify(result.data))
-                setTimeout(() => {
-                    navigate("/")
-                }, 1000);
+                // localStorage.setItem('auth-token',JSON.stringify(result.data))
+                // setTimeout(() => {
+                //     navigate("/")
+                // }, 1000);
                 
             }else{
-                  setalertText(result?.message);
+
+                let err=""
+                for (const key in result.message) {
+                    // console.log(`${key}: ${obj[key]}`);
+                    err+=result.message[key]
+                  }
+                  setalertText(`${err}`);
                   setalertStatus(false);
                   setshowAlert(true);          
-
+console.log("end here")
             }
             console.log(result)
-            console.log(response.ok)
         } catch (error) {
             console.log(error)
             setalertText("Something went wrong");

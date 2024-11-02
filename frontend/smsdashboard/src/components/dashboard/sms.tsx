@@ -8,28 +8,44 @@ import { RadialChart } from '../ui/radialCharts'
 import { PieCharts } from '../ui/pie'
 type Props = {}
 
+type SmsData = {
+  count: number;
+  country: string;
+  operator: string;
+  status: string;
+};
+
+type TransformedData = {
+  [country: string]: {
+    [operator: string]: number;
+  };
+};
+
+type DataEntry = {
+  count: number;
+  country: string;
+  operator: string;
+  status: string;
+};
+
+type ChartData = {
+  country: string;
+  Sent: number;
+  Failed: number;
+};
+type ChartDisplayProps = {
+  chartData: ChartData[];
+};
 
 const Sms = (props: Props) => {
   const dispatch=useDispatch()
   const [pieData, setpieData] = useState<TransformedData>({});
+  const [resData,setresData]=useState<ChartData[]>([])
   const [totalC,settotalC]=useState(0)
   const [passed,setpassed]=useState(0)
   const [refresh,setrefresh]=useState(false)
 
 
-  type SmsData = {
-    count: number;
-    country: string;
-    operator: string;
-    status: string;
-  };
-  
-  type TransformedData = {
-    [country: string]: {
-      [operator: string]: number;
-    };
-  };
-  
   
   function transformData(data: SmsData[]): TransformedData {
     let totalCount=0;
@@ -60,15 +76,47 @@ const Sms = (props: Props) => {
       settotalC(totalCount)
 return returnVal
   }
+  const summarizeCountryStatuses = (data: DataEntry[]): ChartData[] => {
+    const result: { [country: string]: { Sent: number; Failed: number } } = {};
+  
+    data.forEach(({ country, status, count }) => {
+      // Initialize country object if it doesn't exist
+      if (!result[country]) {
+        result[country] = { Sent: 0, Failed: 0 };
+      }
+  
+      // Update the count based on status
+      if (status === "failed") {
+        result[country].Failed += count;
+      } else if (status === "sent") {
+        result[country].Sent += count;
+      }
+    });
+  
+    // Convert the result object to an array of ChartData
+    return Object.entries(result).map(([country, counts]) => ({
+      country,
+      Sent: counts.Sent,
+      Failed: counts.Failed,
+    }));
+  };
   
   useEffect(() => {
 
   
       const getMetrics=async()=>{
+        try {
           const response=await fetch(`http://localhost:5000/api/metrics`);
           const responsedata=await response.json();
           const transformedData = transformData(responsedata);
+          const summrizedData = summarizeCountryStatuses(responsedata);
+          setresData(summrizedData)
           console.log(responsedata)
+          // setresData(responsedata)
+        } catch (error) {
+          
+        }
+        
       }
       getMetrics()
    
@@ -86,7 +134,7 @@ return returnVal
       {/* <button >Open</button> */}
       <SmsModal />
       <div className='flex flex-col md:flex-row justify-evenly items-center'> 
-      <BarGraph />
+      <BarGraph data={resData}/>
       <RadialChart total={totalC} passed={passed}/>
       </div>
       <div className='flex justify-evenly flex-wrap py-8'>
